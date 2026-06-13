@@ -40,8 +40,11 @@ app.post("/api/notes", (req, res) => {
   if (!title || !content) {
     return res.status(400).json({ error: "Title and content are required" });
   }
+  const nextId = notes.length > 0 
+    ? Math.max(...notes.map(n => n.id)) + 1 
+    : 1;
   const newNote = {
-    id: Date.now(),
+    id: nextId,
     title: title,
     content: content,
     createdAt: new Date().toISOString().split("T")[0],

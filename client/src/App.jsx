@@ -8,7 +8,7 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedNote, setSelectedNote] = useState(null);
   const [noteToEdit, setNoteToEdit] = useState(null);
 
@@ -36,6 +36,14 @@ function App() {
 
     initializeNotes();
   }, []);
+
+  const filteredNotes = notes.filter((note) => {
+  const query = searchQuery.toLowerCase();
+  return (
+    note.id.toString().includes(query) || 
+    note.title.toLowerCase().includes(query)
+  );
+});
 
   const handleSaveNote = async ({ title, content }) => {
     setError(null);
@@ -87,8 +95,7 @@ function App() {
             My Notes App
           </h1>
           <p className="text-slate-500 text-sm mt-1">
-            Your digital mind, organized. Capture thoughts instantly and sync
-            them seamlessly.
+            Create your notes and keep track of your thoughts.
           </p>
         </header>
 
